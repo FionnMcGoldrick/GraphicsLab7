@@ -20,6 +20,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
+
+        //variables
+        let speed = 0.01; // Speed of the sphere movement
+        let direction = 1; // 1 for right, -1 for left
+
         // Canvas
         var canvas = document.getElementById("mainCanvas");
 
@@ -53,13 +58,26 @@
 
         // Animation Loop
         function animate() {
+
             requestAnimationFrame(animate);
             sphere.rotation.x += 0.01;
             sphere.rotation.y += 0.01;
+            sphere.position.x += speed; //move sphere
+
+            // Check for collision with the right wall
+            if (sphere.position.x +  1 >= canvas.width) {
+                direction *= -1; // Change direction to left
+            }
+
+            // Check for collision with the left wall
+            if (sphere.position.x <= -5) {
+                direction = 1; // Change direction to right
+            }
+
             renderer.render(scene, camera);
         }
 
-        
+
 
         animate(); // Call animation function
 
