@@ -7,6 +7,10 @@ blockSize = 2
 aperture_size = 3
 k = 0.04
 
+R = 10
+G = 10
+B = 10
+
 # Original Image
 image = cv2.imread('ATU1.jpg')
 cv2.imshow('Original', image)
@@ -31,3 +35,11 @@ imgHarris[dst > 0.01 * dst.max()] = [0, 0, 255]  # Draw red circles at detected 
 cv2.imshow('Detected Corners', imgHarris)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+threshold = 0.1; #number between 0 and 1
+for i in range(len(dst)):
+    for j in range(len(dst[i])):
+        if dst[i][j] > (threshold*dst.max()):
+            cv2.circle(imgHarris,(j,i),3,(B, G, R),-1)
+
+
