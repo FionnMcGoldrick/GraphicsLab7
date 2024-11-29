@@ -21,6 +21,9 @@ minDistance = 10
 # Original Image
 image = cv2.imread('ATU1.jpg')
 
+#Second Image
+image2 = cv2.imread('one-piece.jpg')
+
 # GrayScale Image
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -71,7 +74,19 @@ kp, des = orb.compute(image, kp)
 # draw only keypoints location,not size and orientation
 img2 = cv2.drawKeypoints(image, kp, None, color=(0,255,0), flags=0)
 
+#New Image Orbs
+# find the keypoints with ORB
+kp = orb.detect(image2,None)
+ 
+# compute the descriptors with ORB
+kp, des = orb.compute(image2, kp)
+ 
+# draw only keypoints location,not size and orientation
+image2 = cv2.drawKeypoints(image2, kp, None, color=(0,255,0), flags=0)
 
+
+
+#Subplotted Images
 plt.subplot(nrows, ncols, 1), plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cmap='gray')
 plt.title('Original'), plt.xticks([]), plt.yticks([])
 
@@ -87,11 +102,12 @@ plt.title('ShiTomasi'), plt.xticks([]), plt.yticks([])
 plt.subplot(nrows, ncols, 5), plt.imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB), cmap='gray')
 plt.title('Orbs'), plt.xticks([]), plt.yticks([])
 
+plt.subplot(nrows, ncols, 6), plt.imshow(cv2.cvtColor(image2, cv2.COLOR_BGR2RGB), cmap='gray')
+plt.title('One Piece'), plt.xticks([]), plt.yticks([])
+
+
+
 plt.show()
-
-
-
-
 
 
 
