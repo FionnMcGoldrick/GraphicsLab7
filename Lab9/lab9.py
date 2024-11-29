@@ -11,8 +11,12 @@ R = 255
 G = 0
 B = 0
 
-nrows = 2
+nrows = 3
 ncols = 2
+
+maxCorners = 100
+qualityLevel = 0.01
+minDistance = 10
 
 # Original Image
 image = cv2.imread('ATU1.jpg')
@@ -32,11 +36,41 @@ imgHarris = image.copy()  # Create a deep copy of the original image
 # CornerHarris
 dst = cv2.cornerHarris(gray_image, blockSize, aperture_size, k)
 
+
+
+#Corner
+corners = cv2.goodFeaturesToTrack(gray_image,maxCorners,qualityLevel,minDistance)
+corners = np.int0(corners) #convert corners values to integer
+
+
+#Another deep copy of orignal image
+imgShiTomasi = image.copy()
+
+#Setting corners to imgShiTomasi
+for i in corners:
+    x,y = i.ravel()
+    cv2.circle(imgShiTomasi,(x,y),3,(B, G, R),-1)
+
+
 threshold = 0.1; #number between 0 and 1
 for i in range(len(dst)):
     for j in range(len(dst[i])):
         if dst[i][j] > (threshold*dst.max()):
             cv2.circle(imgHarris,(j,i),3,(B, G, R),-1)
+
+
+#Orbs
+orb = cv2.ORB_create()
+ 
+# find the keypoints with ORB
+kp = orb.detect(image,None)
+ 
+# compute the descriptors with ORB
+kp, des = orb.compute(image, kp)
+ 
+# draw only keypoints location,not size and orientation
+img2 = cv2.drawKeypoints(image, kp, None, color=(0,255,0), flags=0)
+
 
 plt.subplot(nrows, ncols, 1), plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), cmap='gray')
 plt.title('Original'), plt.xticks([]), plt.yticks([])
@@ -47,10 +81,19 @@ plt.title('Grayscale'), plt.xticks([]), plt.yticks([])
 plt.subplot(nrows, ncols, 3), plt.imshow(cv2.cvtColor(imgHarris, cv2.COLOR_BGR2RGB), cmap='gray')
 plt.title('image-harris'), plt.xticks([]), plt.yticks([])
 
-plt.subplot(nrows, ncols, 4), plt.imshow(cv2.cvtColor(imgHarris, cv2.COLOR_BGR2RGB), cmap='gray')
-plt.title('CornerHarris'), plt.xticks([]), plt.yticks([])
+plt.subplot(nrows, ncols, 4), plt.imshow(cv2.cvtColor(imgShiTomasi, cv2.COLOR_BGR2RGB), cmap='gray')
+plt.title('ShiTomasi'), plt.xticks([]), plt.yticks([])
+
+plt.subplot(nrows, ncols, 5), plt.imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB), cmap='gray')
+plt.title('Orbs'), plt.xticks([]), plt.yticks([])
 
 plt.show()
+
+
+
+
+
+
 
 cv2.destroyAllWindows()
 
