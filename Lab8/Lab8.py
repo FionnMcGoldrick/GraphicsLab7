@@ -22,7 +22,7 @@ sobelVertical = cv2.Sobel(imageBlur13, cv2.CV_64F, 0, 1, ksize=5)  # y dir
 sobelSum = sobelHorizontal + sobelVertical
 
 # Canny Image
-canny = cv2.Canny(image, 100, 200)
+canny = cv2.Canny(imageBlur13, 100, 200)
 
 # Function to apply threshold
 def threshold_image(sobel_sum, threshold):

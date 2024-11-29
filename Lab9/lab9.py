@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #Variables
-blockSize = 5
+blockSize = 2
 aperture_size = 3
-k = 1
+k = 0.04
+
 
 
 #Original Image
