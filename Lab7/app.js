@@ -10,13 +10,13 @@ function plotCO2Data(data) {
       .domain(d3.extent(data, d => 2023 - d["years_before_2023"])) // Convert to calendar years
       .range([0, width]);
 
-  // Filter data
+  // Filter data to include only valid entries
   data = data
       .filter(d => d["years_before_2023"] != null && !isNaN(d["years_before_2023"]) && d["years_before_2023"] >= 0 && d["years_before_2023"] <= 2500)
       .slice(0, 2500);
 
   // Log data for debugging
-  console.log(data)
+  console.log(data);
   console.log("Scale domain:", x.domain());
   console.log("Scale range:", x.range());
 
@@ -139,7 +139,7 @@ function plotCO2Data(data) {
       .attr("stroke", "blue")
       .text("CH4");
 
-  // Y-axis label (CO2)
+  // Y-axis label (Temp)
   svg.append("text")
       .attr("class", "label")
       .attr("transform", "rotate(-90)")
@@ -149,7 +149,7 @@ function plotCO2Data(data) {
       .attr("stroke", "green")
       .text("Temp");
 
-  // Y-axis label (CH4)
+  // Title
   svg.append("text")
       .attr("class", "title")
       .attr("x", width / 2)
@@ -193,10 +193,10 @@ function plotCO2Data(data) {
       .call(zoom);
 }
 
-// JSON call to api
+// JSON call to API
 $.getJSON("https://tinyurl.com/k4chnujx", function (data) {
   // Logs JSON data
-  data = data.slice(0, 2500)
+  data = data.slice(0, 2500);
   console.log(data);
   // Function call to plot data
   plotCO2Data(data);
