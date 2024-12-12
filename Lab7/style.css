@@ -1,0 +1,21 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.chart {
+  margin: 0 auto;
+}
+
+.axis text {
+  font-size: 14px;
+}
+
+.axis-label {
+  font-size: 16px;
+  font-weight: bold;
+}
